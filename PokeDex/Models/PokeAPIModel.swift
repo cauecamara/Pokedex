@@ -79,9 +79,81 @@ struct Ability: Codable {
     }
 }
 
+enum PokemonType: String, Codable {
+    case normal
+    case fighting
+    case flying
+    case poison
+    case ground
+    case rock
+    case bug
+    case ghost
+    case steel
+    case fire
+    case water
+    case grass
+    case electric
+    case psychic
+    case ice
+    case dragon
+    case dark
+    case fairy
+    
+    var color: UIColor {
+        switch self {
+        case .normal:
+            return .pokeTypeNormal
+        case .fighting:
+            return .pokeTypeFighting
+        case .flying:
+            return .pokeTypeFlying
+        case .poison:
+            return .pokeTypePoison
+        case .ground:
+            return .pokeTypeGround
+        case .rock:
+            return .pokeTypeRock
+        case .bug:
+            return .pokeTypeBug
+        case .ghost:
+            return .pokeTypeGhost
+        case .steel:
+            return .pokeTypeSteal
+        case .fire:
+            return .pokeTypeFire
+        case .water:
+            return .pokeTypeWater
+        case .grass:
+            return .pokeTypeGrass
+        case .electric:
+            return .pokeTypeElectric
+        case .psychic:
+            return .pokeTypePsychic
+        case .ice:
+            return .pokeTypeIce
+        case .dragon:
+            return .pokeTypeDragon
+        case .dark:
+            return .pokeTypeDark
+        case .fairy:
+            return .pokeTypeFairy
+        }
+    }
+}
+
 // MARK: - Species
 struct Species: Codable {
     let name: String
+    let url: String
+
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case url = "url"
+    }
+}
+
+struct TypeSpecies: Codable {
+    let name: PokemonType
     let url: String
 
     enum CodingKeys: String, CodingKey {
@@ -351,7 +423,7 @@ struct Stat: Codable {
 // MARK: - TypeElement
 struct TypeElement: Codable {
     let slot: Int
-    let type: Species
+    let type: TypeSpecies
 
     enum CodingKeys: String, CodingKey {
         case slot = "slot"
