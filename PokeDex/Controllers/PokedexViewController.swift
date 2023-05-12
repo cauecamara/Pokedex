@@ -8,9 +8,10 @@
 import UIKit
 
 class PokedexViewController: UIViewController {
-    
+
     let pokeapi = PokeAPI()
     var pokemons: [Pokemon] = []
+    var types: [TypeElement] = []
     
     lazy var mainView: PokedexView = {
         let view = PokedexView()
@@ -29,14 +30,23 @@ class PokedexViewController: UIViewController {
         pokeapi.delegate = self
         pokeapi.getPokemons()
         mainView.loading.startAnimating()
-        
+        navigationController?.isNavigationBarHidden = true
     }
-
     
 }
 
 extension PokedexViewController: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let infoViewController = InfoViewController()
+        let pokemon = pokemons[indexPath.item]
+        let pokemonType = pokemon.types.compactMap{ return $0.type.name }
+        infoViewController.setup(id: pokemon.id, pokeTipos: pokemonType, weight: pokemon.weight, height: pokemon.height, name: pokemon.name, image: pokemon.sprites.other?.officialArtwork.frontDefault ?? "", status: pokemon.stats
+        )
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.pushViewController(infoViewController, animated: true)
+        
+    }
 }
 
 extension PokedexViewController: UICollectionViewDataSource {
@@ -45,6 +55,7 @@ extension PokedexViewController: UICollectionViewDataSource {
         cell.setupView()
         let pokemon = pokemons[indexPath.item]
         cell.configure(name: pokemon.name, id: pokemon.id, imageURL: pokemon.sprites.frontDefault)
+        
         return cell
     }
 
@@ -65,6 +76,7 @@ extension PokedexViewController: APIDelegate {
         DispatchQueue.main.async {
             self.mainView.loading.stopAnimating()
             self.mainView.collectionView.reloadData()
+            
         }
     }
 }

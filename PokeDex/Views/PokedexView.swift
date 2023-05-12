@@ -9,7 +9,7 @@ import UIKit
 
 class PokedexView: UIView {
     
-    lazy var loading = UIActivityIndicatorView(style: .large)
+    lazy var loading = CustomActivityIndicator()
     
     lazy var textFieldBusca: UITextField = {
         let textField = UITextField()
@@ -65,7 +65,7 @@ class PokedexView: UIView {
         stackView.spacing = 24
         return stackView
     }()
-    
+
 }
 
 extension PokedexView: ViewCode {
@@ -84,6 +84,7 @@ extension PokedexView: ViewCode {
         )
         image.anchor(width: 24, height: 24)
         loading.anchorCenterSuperview()
+        loading.anchor(width: 40, height: 40)
         textFieldBusca.anchor(height: 32)
     }
     

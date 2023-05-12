@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		621557D42A0E925B00407D4B /* Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621557D32A0E925B00407D4B /* Load.swift */; };
 		622985952A0978B5006D701E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 622985942A0978B5006D701E /* AlamofireImage */; };
 		6231303B2A0ADE5A00419D1B /* PokedexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6231303A2A0ADE5A00419D1B /* PokedexView.swift */; };
+		6251B6432A0BE41B00F4EA07 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6251B6422A0BE41B00F4EA07 /* PaddingLabel.swift */; };
 		625C2EFD2A06A20E00DCEE60 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625C2EFC2A06A20E00DCEE60 /* PokemonCollectionViewCell.swift */; };
 		625C2F032A06A7A400DCEE60 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625C2F022A06A7A400DCEE60 /* ViewCode.swift */; };
 		625C2F052A06AE7000DCEE60 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625C2F042A06AE7000DCEE60 /* UIView+AutoLayout.swift */; };
@@ -22,10 +24,15 @@
 		62CD269F2A0596010004428F /* PokedexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CD269E2A0596010004428F /* PokedexViewController.swift */; };
 		62CD26A42A0596030004428F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62CD26A32A0596030004428F /* Assets.xcassets */; };
 		62CD26A72A0596030004428F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62CD26A52A0596030004428F /* LaunchScreen.storyboard */; };
+		62F30A192A0D34A100C2015C /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62F30A062A0D34A100C2015C /* Poppins-Regular.ttf */; };
+		62F30A1B2A0D34A100C2015C /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62F30A082A0D34A100C2015C /* Poppins-Bold.ttf */; };
+		62F30A222A0D37F300C2015C /* UIFont+Poppins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F30A212A0D37F300C2015C /* UIFont+Poppins.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		621557D32A0E925B00407D4B /* Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Load.swift; sourceTree = "<group>"; };
 		6231303A2A0ADE5A00419D1B /* PokedexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexView.swift; sourceTree = "<group>"; };
+		6251B6422A0BE41B00F4EA07 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		625C2EFC2A06A20E00DCEE60 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
 		625C2F022A06A7A400DCEE60 /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 		625C2F042A06AE7000DCEE60 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
@@ -41,6 +48,9 @@
 		62CD26A32A0596030004428F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62CD26A62A0596030004428F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		62CD26A82A0596030004428F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		62F30A062A0D34A100C2015C /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		62F30A082A0D34A100C2015C /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		62F30A212A0D37F300C2015C /* UIFont+Poppins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Poppins.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,8 @@
 		625C2EFE2A06A5CF00DCEE60 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				621557D32A0E925B00407D4B /* Load.swift */,
+				6251B6422A0BE41B00F4EA07 /* PaddingLabel.swift */,
 				62B92B772A07FC3E0089B8AD /* Extensions */,
 				625C2F022A06A7A400DCEE60 /* ViewCode.swift */,
 			);
@@ -97,6 +109,7 @@
 				625C2F042A06AE7000DCEE60 /* UIView+AutoLayout.swift */,
 				62B92B782A07FCCF0089B8AD /* UIColor+PokeColors.swift */,
 				62B92B7A2A07FDC40089B8AD /* UIColor+HexColor.swift */,
+				62F30A212A0D37F300C2015C /* UIFont+Poppins.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -120,6 +133,7 @@
 		62CD26992A0596010004428F /* PokeDex */ = {
 			isa = PBXGroup;
 			children = (
+				62F309F92A0D348C00C2015C /* Font */,
 				625C2EFF2A06A5F400DCEE60 /* Models */,
 				625C2F012A06A62A00DCEE60 /* Views */,
 				625C2F002A06A61F00DCEE60 /* Controllers */,
@@ -131,6 +145,23 @@
 				62CD26A82A0596030004428F /* Info.plist */,
 			);
 			path = PokeDex;
+			sourceTree = "<group>";
+		};
+		62F309F92A0D348C00C2015C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				62F309FA2A0D34A100C2015C /* Poppins */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		62F309FA2A0D34A100C2015C /* Poppins */ = {
+			isa = PBXGroup;
+			children = (
+				62F30A062A0D34A100C2015C /* Poppins-Regular.ttf */,
+				62F30A082A0D34A100C2015C /* Poppins-Bold.ttf */,
+			);
+			path = Poppins;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +228,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62F30A1B2A0D34A100C2015C /* Poppins-Bold.ttf in Resources */,
+				62F30A192A0D34A100C2015C /* Poppins-Regular.ttf in Resources */,
 				62CD26A72A0596030004428F /* LaunchScreen.storyboard in Resources */,
 				62CD26A42A0596030004428F /* Assets.xcassets in Resources */,
 			);
@@ -210,15 +243,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				62CD269F2A0596010004428F /* PokedexViewController.swift in Sources */,
+				621557D42A0E925B00407D4B /* Load.swift in Sources */,
 				628B6D452A0A82610081A5E4 /* InfoViewController.swift in Sources */,
 				62B92B7F2A082F110089B8AD /* PokeAPIModel.swift in Sources */,
 				6231303B2A0ADE5A00419D1B /* PokedexView.swift in Sources */,
+				62F30A222A0D37F300C2015C /* UIFont+Poppins.swift in Sources */,
 				625C2F052A06AE7000DCEE60 /* UIView+AutoLayout.swift in Sources */,
 				625C2F032A06A7A400DCEE60 /* ViewCode.swift in Sources */,
 				62B92B7D2A0824580089B8AD /* PokeAPI.swift in Sources */,
 				62CD269B2A0596010004428F /* AppDelegate.swift in Sources */,
 				625C2EFD2A06A20E00DCEE60 /* PokemonCollectionViewCell.swift in Sources */,
 				62B92B7B2A07FDC40089B8AD /* UIColor+HexColor.swift in Sources */,
+				6251B6432A0BE41B00F4EA07 /* PaddingLabel.swift in Sources */,
 				62B92B792A07FCCF0089B8AD /* UIColor+PokeColors.swift in Sources */,
 				62CD269D2A0596010004428F /* SceneDelegate.swift in Sources */,
 			);

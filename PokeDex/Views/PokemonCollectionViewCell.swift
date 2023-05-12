@@ -49,7 +49,6 @@ class PokemonCollectionViewCell: UICollectionViewCell, ViewCode {
         return view
     }()
     
-    
     func buildViewHierachy() {
         addSubview(stackView)
         addSubview(quadradoCinza)
@@ -82,5 +81,6 @@ class PokemonCollectionViewCell: UICollectionViewCell, ViewCode {
         pokeImage.image = nil
         labelPokeName.text = ""
         labelPokeNumber.text = ""
+
     }
 }
