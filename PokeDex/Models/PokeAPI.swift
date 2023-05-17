@@ -27,4 +27,8 @@ class PokeAPI {
         return try await AF.request(url).serializingDecodable(Pokemon.self).value
     }
     
+    func getAboutPokemon(url: String) async throws -> About {
+        return try await AF.request(url).serializingDecodable(About.self).value
+    }
+    
 }

@@ -430,3 +430,18 @@ struct TypeElement: Codable {
         case type = "type"
     }
 }
+
+struct About: Codable {
+    let flavorTextEntries: [Texto]
+    
+    enum CodingKeys: String, CodingKey {
+        case flavorTextEntries = "flavor_text_entries"
+    }
+    struct Texto: Codable {
+        let flavorText: String
+        
+        enum CodingKeys: String, CodingKey {
+            case flavorText = "flavor_text"
+        }
+    }
+}
