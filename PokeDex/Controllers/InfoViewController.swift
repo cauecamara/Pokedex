@@ -9,6 +9,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
     let pokemon: Pokemon
+    let pokeapi = PokeAPI()
+    var about: About?
     var mainColor: UIColor {
         return pokemon.types.first?.type.name.color ?? .white
     }
@@ -47,7 +49,6 @@ class InfoViewController: UIViewController {
 
     lazy var stackViewInfo: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [stackViewWeight, stackViewHeight, stackViewMoves])
-        stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 25
@@ -63,7 +64,6 @@ class InfoViewController: UIViewController {
 
     lazy var stackViewH1: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [weightImage, pokeWeightValue])
-        stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.alignment = .center
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -80,7 +80,6 @@ class InfoViewController: UIViewController {
 
     lazy var stackViewH2: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [heightImage, pokeHeightValue])
-        stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -134,7 +133,6 @@ class InfoViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [image])
         image.contentMode = .scaleAspectFill
         stackView.alignment = .lastBaseline
-        stackView.axis = .horizontal
         image.alpha = 0.1
         return stackView
     }()
@@ -215,35 +213,31 @@ class InfoViewController: UIViewController {
         bar.backgroundColor = .gray
         return bar
     }()
-    
+
     lazy var pokeMoves: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 12, weight: .regular)
+        label.font = .poppins(ofSize: 10, weight: .regular)
         label.numberOfLines = 0
         var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.07
-        label.attributedText = NSMutableAttributedString(
-            string: "Chlorophyll\nOvergrow",
-            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        )
         return label
     }()
 
     lazy var movesLabel: UILabel = {
         let label = UILabel()
         label.text = "Moves"
-        label.font = .poppins(ofSize: 12, weight: .regular)
+        label.font = .poppins(ofSize: 8, weight: .regular)
         label.textAlignment = .center
         return label
     }()
 
     lazy var descriptionPokemon: UILabel = {
         let label = UILabel()
-        label.text = "When it retracts its long neck into its shell, it squirts out water with vigorous force."
         label.numberOfLines = 0
         label.font = .poppins(ofSize: 10, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
 
@@ -365,11 +359,21 @@ class InfoViewController: UIViewController {
     }
 
     func setup() {
+        var abilityName = "/"
         firstTypePokemon.text = pokemon.types.first?.type.name.rawValue.capitalized
         navigationItem.title = pokemon.name.capitalized
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
+        for ability in pokemon.abilities {
+            abilityName += ability.ability.name.capitalized
+            abilityName += "/"
+        }
+        pokeMoves.attributedText = NSMutableAttributedString(string: abilityName)
+        Task {
+            guard let about = try? await pokeapi.getAboutPokemon(url: pokemon.species.url) else { return }
+            descriptionPokemon.text = about.flavorTextEntries[81].flavorText
+        }
         let formater = NumberFormatter()
         formater.numberStyle = .none
         formater.minimumIntegerDigits = 3
