@@ -180,7 +180,7 @@ class InfoViewController: UIViewController {
     }()
 
     lazy var hpBar = UIBarItem()
-    
+
     lazy var viewBar: UIView = {
         let bar = UIView()
         bar.backgroundColor = .gray
@@ -372,7 +372,7 @@ class InfoViewController: UIViewController {
         pokeMoves.attributedText = NSMutableAttributedString(string: abilityName)
         Task {
             guard let about = try? await pokeapi.getAboutPokemon(url: pokemon.species.url) else { return }
-            descriptionPokemon.text = about.flavorTextEntries[81].flavorText
+            descriptionPokemon.text = about.flavorTextEntries[0].flavorText
         }
         let formater = NumberFormatter()
         formater.numberStyle = .none
