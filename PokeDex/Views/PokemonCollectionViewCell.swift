@@ -110,6 +110,7 @@ class PokemonCollectionViewCell: UICollectionViewCell, ViewCode {
         labelPokeName.text = ""
         labelPokeNumber.text = ""
         favoritar.isSelected = false
+        favoritar.tintColor = .gray
 
     }
 }
