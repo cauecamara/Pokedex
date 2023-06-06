@@ -17,6 +17,33 @@
         "revision" : "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
         "version" : "4.2.0"
       }
+    },
+    {
+      "identity" : "pokemonapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kinkofer/PokemonAPI",
+      "state" : {
+        "revision" : "dfb4cfbf5f91798a5c37b031b913e21a74a06289",
+        "version" : "6.1.1"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "36b2df44453ba5e830369c76ab0683799a287605",
+        "version" : "13.13.0"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "eed598a7aa9b56fcf7273ea4279a516af8f7d3f3"
+      }
     }
   ],
   "version" : 2

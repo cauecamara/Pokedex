@@ -4,18 +4,41 @@
 //
 //  Created by Caue Camara on 05/05/23.
 //
-
 import UIKit
 import PokemonAPI
+import CoreData
+import RealmSwift
 
 class PokedexViewController: UIViewController {
-    
+    var realm: Realm? {
+        do {
+            return try Realm()
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    var resultado: Results<Poke>? { guard let realm = realm else { return nil }
+        let lista = realm.objects(Poke.self)
+        if searchText.isEmpty {
+            return lista
+        } else {
+            return lista.filter("nome CONTAINS[cd] %@", searchText)
+        }
+    }
+    var resultadoFavorite: Results<Poke>? {
+        let filtroID = resultado?.filter("id IN %@", favoriteIDs)
+        if searchText.isEmpty {
+            return filtroID
+        } else {
+            return filtroID?.filter("nome CONTAINS[cd] %@", searchText)
+        }
+    }
     let pokeapi = PokeAPI()
     let pokeapiLib = PokemonAPI()
     var pokemons: [Pokemon] = []
     var pokemonsFiltrados: [Pokemon] {
         guard !searchText.isEmpty else { return pokemons }
-        
         return pokemons.filter { pokemon in
             pokemon.name.contains(searchText)
         }
@@ -50,6 +73,13 @@ class PokedexViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        do {
+            try realm?.write {
+                realm?.deleteAll()
+            }
+        } catch {
+            print(error)
+        }
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.tabBar.delegate = self
@@ -57,13 +87,69 @@ class PokedexViewController: UIViewController {
         mainView.tabBar.isUserInteractionEnabled = false
         mainView.textFieldBusca.delegate = self
         navigationController?.isNavigationBarHidden = true
-
-        Task {
-            guard let pokemons = try? await pokeapi.getPokemons() else { return }
-            self.pokemons = pokemons
-            mainView.collectionView.reloadData()
-            mainView.loading.stopAnimating()
-            mainView.tabBar.isUserInteractionEnabled = true
+        if resultado?.count == 50 {
+            print("foi")
+        } else {
+            Task {
+                guard let pokemons = try? await pokeapi.getPokemons() else { return }
+                self.pokemons = pokemons
+                mainView.collectionView.reloadData()
+                mainView.loading.stopAnimating()
+                mainView.tabBar.isUserInteractionEnabled = true
+                if resultado?.count ?? 0 <= 49 {
+                    saveItens(pokemons: self.pokemons)
+                }
+            }
+            
+        }
+        mainView.collectionView.reloadData()
+        mainView.loading.stopAnimating()
+        mainView.tabBar.isUserInteractionEnabled = true
+    }
+    func saveItens(pokemons: [Pokemon]) {
+        guard let realm = realm else { return }
+        for pokemon in pokemons {
+            do {
+                try realm.write {
+                    var poke = Poke()
+                    pokemon.abilities.count
+                    switch pokemon.abilities.count {
+                    case 1:
+                        let ability = pokemon.abilities[0].ability.name
+                        poke.abilities = ability
+                    case 2:
+                        let ability = pokemon.abilities[0].ability.name + pokemon.abilities[1].ability.name
+                        poke.abilities = ability
+                    case 3:
+                        let ability = pokemon.abilities[0].ability.name + pokemon.abilities[1].ability.name + pokemon.abilities[2].ability.name
+                        poke.abilities = ability
+                    default:
+                        let ability = pokemon.abilities[0].ability.name
+                        poke.abilities = ability
+                    }
+                    poke.nome = pokemon.name
+                    poke.id = pokemon.id
+                    poke.spriteURL = pokemon.sprites.other?.officialArtwork.frontDefault ?? "sprite not found"
+                    poke.hp = pokemon.stats[0].baseStat
+                    poke.atk = pokemon.stats[1].baseStat
+                    poke.def = pokemon.stats[2].baseStat
+                    poke.spATK = pokemon.stats[3].baseStat
+                    poke.spDef = pokemon.stats[4].baseStat
+                    poke.speed = pokemon.stats[5].baseStat
+                    if pokemon.types.count == 2 {
+                        poke.firstType = pokemon.types[0].type.name.rawValue
+                        poke.secondType = pokemon.types.last?.type.name.rawValue
+                    } else {
+                        poke.firstType = pokemon.types[0].type.name.rawValue
+                    }
+                    poke.height = pokemon.height
+                    poke.weight = pokemon.weight
+                    print(poke)
+                    realm.add(poke)
+                }
+            } catch {
+                print("sr error \(error)")
+            }
         }
     }
 
@@ -105,25 +191,38 @@ extension PokedexViewController: UICollectionViewDataSource {
         cell.setupView()
         cell.delegate = self
         var pokemon: Pokemon
-
+//        if isFavoriteSelected {
+//            pokemon = pokemonsFavoritos[indexPath.item]
+//        } else {
+//            pokemon = pokemonsFiltrados[indexPath.item]
+//        }
+//
+        guard let resultado = resultado?[indexPath.item] else { return UICollectionViewCell() }
         if isFavoriteSelected {
-            pokemon = pokemonsFavoritos[indexPath.item]
-        } else {
-            pokemon = pokemonsFiltrados[indexPath.item]
-        }
-
-        let isFavorite = favoriteIDs.contains(pokemon.id)
-        cell.configure(
-            name: pokemon.name,
-            id: pokemon.id,
-            imageURL: pokemon.sprites.other?.officialArtwork.frontDefault ?? "",
-            isFavorite: isFavorite
-        )
+            guard let resultadoFavorite = resultadoFavorite?[indexPath.item] else { return UICollectionViewCell() }
+            let isFavorite = favoriteIDs.contains(resultadoFavorite.id)
+            cell.configure(
+                name: resultadoFavorite.nome,
+                id: resultadoFavorite.id,
+                imageURL: resultadoFavorite.spriteURL,
+                isFavorite: isFavorite
+                )
+                } else {
+                    let isFavorite = favoriteIDs.contains(resultado.id)
+                    cell.configure(
+                        name: resultado.nome,
+                        id: resultado.id,
+                        imageURL: resultado.spriteURL,
+                        isFavorite: isFavorite
+                    )
+                }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isFavoriteSelected ? pokemonsFavoritos.count : pokemonsFiltrados.count
+        guard let resultado = resultado else { return resultado?.count ?? 0}
+        guard let resultadoFavorite = resultadoFavorite else { return resultadoFavorite?.count ?? 0}
+        return !isFavoriteSelected ? resultado.count : resultadoFavorite.count
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
